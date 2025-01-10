@@ -1,4 +1,6 @@
 open Gfile
+open Tools
+open Fordfulkerson
     
 let () =
 
@@ -27,9 +29,8 @@ let () =
 
   (* Open file *)
   let graph = from_file infile in
+  let graph2 = ford_fulkerson (gmap graph  (fun x -> int_of_string x)) _source _sink  in
 
   (* Rewrite the graph that has been read. *)
-  let () = write_file outfile graph in
-
-  ()
-
+  let () = write_file outfile graph2 in
+  export "graph_infile" graph2

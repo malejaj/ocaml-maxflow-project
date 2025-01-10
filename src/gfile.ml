@@ -111,4 +111,17 @@ let from_file path =
   
   close_in infile ;
   final_graph
+
+let export path graph = 
+  let opened_file = open_out path in
+  let func arc = fprintf opened_file "%d -> %d [label = \"%s\"];\n" arc.src arc.tgt arc.lbl in
+  fprintf opened_file "digraph finite_state_machine {
+    fontname=\"Helvetica,Arial,sans-serif\"
+    node [fontname=\"Helvetica,Arial,sans-serif\"]
+    edge [fontname=\"Helvetica,Arial,sans-serif\"]
+    rankdir=LR;
+    node [shape = circle];\n";
+    e_iter graph func;
+    fprintf opened_file "} \n";
+;;
   
