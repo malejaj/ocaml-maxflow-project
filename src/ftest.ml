@@ -1,6 +1,6 @@
 open Gfile
-open Tools
 open Fordfulkerson
+open Moneysharing
     
 let () =
 
@@ -29,8 +29,15 @@ let () =
 
   (* Open file *)
   let graph = from_file infile in
-  let graph2 = ford_fulkerson (gmap graph  (fun x -> int_of_string x)) _source _sink  in
+  (* let runff = ford_fulkerson (gmap graph  (fun x -> int_of_string x)) _source _sink  in *)
+
+  let people = [0; 1; 2] in
+  let fully_connected_graph = init_graph_with_arcs people in
+  let fg = final_graph fully_connected_graph [(0, 20); (1, -10); (2, -10)] in 
+  let runff = ford_fulkerson fg (-2) (-1) in 
 
   (* Rewrite the graph that has been read. *)
-  let () = write_file outfile graph2 in
-  export "graph_infile" graph2
+  let () = write_file outfile runff in
+    export "graph_infile" graph;
+    export "answer" runff;
+  ()
